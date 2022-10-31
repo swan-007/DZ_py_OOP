@@ -1,7 +1,6 @@
 
 class Student:
-
-
+    s = []
 
     def __init__(self, name, surname, gender):
         self.name = name
@@ -11,7 +10,7 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
         self.me_course = []
-
+        Student.s.append(self)
 
 
 
@@ -71,7 +70,8 @@ class Mentor:
               f" Фамилия: {self.surname}"
         return res
 
-class Lecturer:
+class Lecturer(Mentor):
+    l = []
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
@@ -79,6 +79,7 @@ class Lecturer:
         self.grades = {}
         self.teaches = []
 
+        Lecturer.l.append(self)
 
     def average_rating(self):
         suma = sum(map(sum, self.grades.values()))
@@ -89,7 +90,7 @@ class Lecturer:
     def __str__(self):
         res = f" Имя: {self.name} \n" \
               f" Фамилия: {self.surname} \n" \
-              f"  {self.average_rating()}"
+              f" {self.average_rating()}"
         return res
 
     def __lt__(self, other):
@@ -191,8 +192,6 @@ print(cool_lecturer.average_rating())
 
 
 ######ЗАДАНИЕ 4
-s = [best_student, bad_student ]
-l = [not_bad_lecturer, cool_lecturer]
 
 def general_assessment_student(spisok, cou):
     s = []
@@ -204,7 +203,7 @@ def general_assessment_student(spisok, cou):
     i = sum(s)
     m = len(s)
     res = i // m
-    print(f"Средняя оценка студентов по предмету {cou}: {res}"  )
+    print(f"Средняя оценка всех студентов по предмету {cou}: {res}"  )
 
 
 
@@ -222,8 +221,8 @@ def general_assessment_lecturer(spisok, cou):
     print(f"Средняя оценка лекторов по предмету {cou}: {res}" )
 
 
-general_assessment_student(s, 'Python')
-general_assessment_lecturer(l, 'Python')
+general_assessment_student(Student.s, 'Python')
+general_assessment_lecturer(Lecturer.l, 'Python')
 
 
 
